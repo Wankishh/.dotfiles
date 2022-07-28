@@ -1,0 +1,12 @@
+{
+    "tslint": {
+        "autoFixOnSave": true
+    },
+    "eslint": {
+        "autoFixOnSave": true,
+        "alwaysShowStatus": true
+    },
+    "jest": {
+        "watch": false
+    }
+}
