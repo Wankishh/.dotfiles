@@ -2,15 +2,16 @@ local remap = require("wankishh.keymap")
 local map = remap.nmap
 local nnoremap = remap.nnoremap
 local inoremap = remap.inoremap
+local vnoremap = remap.vnoremap
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin', '~/.config/nvim/plugged')
-    Plug ('folke/tokyonight.nvim', { ['branch']= 'main' })
+    Plug ('ThePrimeagen/refactoring.nvim')
     -- LSP
     Plug 'neovim/nvim-lspconfig'
     Plug 'williamboman/nvim-lsp-installer'
 
-    -- Autocomplete 
+    -- Autocomplete
     Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
@@ -21,12 +22,9 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
     Plug ('tzachar/cmp-tabnine', { ['do']= './install.sh' })
     Plug 'saadparwaiz1/cmp_luasnip'
 
-
-
     --  Snippets
     Plug 'L3MON4D3/LuaSnip'
     Plug 'rafamadriz/friendly-snippets'
-
 
     Plug 'VonHeikemen/lsp-zero.nvim'
 
@@ -55,9 +53,68 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 vim.call('plug#end')
 
 
+local tabnine = require('cmp_tabnine.config')
+local a = {
+    max_lines = 1000
+}
+tabnine:setup(a)
+
+
 local lsp = require('lsp-zero')
 
 lsp.preset('recommended')
+
+lsp.set_preferences({
+  set_lsp_keymaps = false
+})
+
+
+lsp.on_attach(function(client, bufnr)
+  local nnoremap = require("wankishh.keymap").nnoremap
+  nnoremap("gd", function() vim.lsp.buf.definition() end)
+  nnoremap("gr", function() vim.lsp.buf.references() end)
+  nnoremap("gi", function() vim.lsp.buf.implementation() end)
+  nnoremap("ca", function() vim.lsp.buf.code_action() end)
+  nnoremap("rn", function() vim.lsp.buf.rename() end)
+  nnoremap("K", function() vim.lsp.buf.hover() end)
+  nnoremap("[d", function() vim.diagnostic.goto_next() end)
+  nnoremap("<F2>", function()
+      vim.diagnostic.goto_next()
+      vim.diagnostic.open_float()
+  end)
+  nnoremap("]d", function() vim.diagnostic.goto_prev() end)
+  inoremap("<C-h>", function() vim.lsp.buf.signature_help() end)
+end)
+
+lsp.setup_nvim_cmp({
+    sources = {
+        -- tabnine completion? yayaya
+        { name = "cmp_tabnine", keyword_length = 2 },
+
+             { name = "nvim_lsp", keyword_length = 3 },
+        -- For luasnip user.
+             { name = "luasnip", keyword_length = 2 },
+            { name = "buffer", keyword_length = 3 },
+           { name = 'path'},
+    },
+    formatting = {
+        -- changing the order of fields so the icon is the first
+        fields = {'menu', 'abbr', 'kind'},
+
+        -- change sources
+    }
+})
+
+lsp.configure("eslint", {
+    settings = {
+        codeActionOnSave = {
+            enable = true,
+            mode = "all"
+        },
+    }
+})
+
+
 lsp.setup()
 
 require("nvim-autopairs").setup {}
@@ -119,6 +176,21 @@ nnoremap("<Leader>qa", function ()
     vim.cmd("%bd | e# | bd#")
 end)
 
+nnoremap("<Leader>s", function ()
+    vim.cmd(":w")
+end)
+
+
+-- Yank to clipboard
+nnoremap("<Leader>y", "\"+y")
+vnoremap("<Leader>y", "\"+y")
+map("<Leader>Y", "\"+Y")
+
+-- Paste from register clipboard
+nnoremap("<Leader>p", "\"+p")
+vnoremap("<Leader>p", "\"+p")
+map("<Leader>P", "\"+P")
+
 require("bufferline").setup{
     options = {
         -- diagnostics = "coc",
@@ -129,3 +201,6 @@ require("bufferline").setup{
         show_close_icon = false
     }
 }
+
+
+require("wankishh.commands")

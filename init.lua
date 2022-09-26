@@ -15,13 +15,14 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.smartindent = true
 
+
+-- god mode
 vim.opt.relativenumber = true
 vim.opt.nu = true
 vim.opt.wrap = false
 
 -- folds
 vim.opt.foldmethod = "syntax"
-vim.opt.foldenable = false
 
 
 vim.opt.ignorecase = true
@@ -50,6 +51,8 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.diffopt:append("vertical")
 
-vim.cmd "colorscheme tokyonight"
+vim.cmd "colorscheme gruvbox"
+vim.cmd "hi Normal guibg=NONE ctermbg=NONE";
+vim.cmd "syntax on"
 
 
