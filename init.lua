@@ -1,4 +1,5 @@
 vim.g.mapleader = " "
+vim.g.NERDTreeMinimalMenu=1
 require("wankishh")
 -- vim.opt.guicursor = ""
 
@@ -9,7 +10,8 @@ vim.opt.hlsearch = false
 
 
 -- tabs
-vim.opt.expandtab = true
+
+vim.opt.expandtab = false -- false - tab, true - spaces
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -54,5 +56,8 @@ vim.opt.diffopt:append("vertical")
 vim.cmd "colorscheme gruvbox"
 vim.cmd "hi Normal guibg=NONE ctermbg=NONE";
 vim.cmd "syntax on"
+
+vim.diagnostic.config({ virtual_text = true })
+vim.diagnostic.open_float();
 
 

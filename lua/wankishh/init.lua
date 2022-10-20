@@ -173,7 +173,7 @@ end)
 inoremap("<C-c>", "<Esc>")
 
 nnoremap("<Leader>qa", function ()
-    vim.cmd("%bd | e# | bd#")
+    vim.cmd("%bd! | e# | bd#")
 end)
 
 nnoremap("<Leader>s", function ()
