@@ -2,20 +2,27 @@ local nnoremap = require("wankishh.keymap").nnoremap
 local inoremap = require("wankishh.keymap").inoremap
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
+local root_pattern = require("lspconfig.util").root_pattern
 
 local servers = {
     -- clangd = {},
     -- gopls = {},
-    -- pyright = {},
     -- rust_analyzer = {},
     tsserver = {},
-    sumneko_lua = {
+    lua_ls = {
 	Lua = {
 	    workspace = { checkThirdParty = false },
 	    telemetry = { enable = false },
 	},
     },
     dockerls = {},
+    eslint = {
+	root_dir = root_pattern(
+	    ".eslintrc.js",
+	    "node_modules",
+	    ".git"
+	),
+    }
 }
 
 

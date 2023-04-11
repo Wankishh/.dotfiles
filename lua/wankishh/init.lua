@@ -6,6 +6,7 @@ local vnoremap = remap.vnoremap
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin', '~/.config/nvim/plugged')
+    Plug 'mfussenegger/nvim-jdtls'
     Plug 'williamboman/mason.nvim'
     Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'neovim/nvim-lspconfig'
@@ -61,40 +62,19 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 
     Plug 'mfussenegger/nvim-dap'
     Plug 'rcarriga/nvim-dap-ui'
-    Plug 'mfussenegger/nvim-jdtls'
+    Plug 'VonHeikemen/lsp-zero.nvim'
+    Plug "github/copilot.vim"
     --" Use release branch (recommend)
 vim.call('plug#end')
 
 require("mason").setup()
-
 require("nvim-autopairs").setup {}
+
 require("wankishh.telescope")
-require("wankishh.lsp")
+-- require("wankishh.lsp")
 require("wankishh.harpoon")
 require("wankishh.refactoring")
 require("wankishh.gitCommands")
-
--- local dapVscode = require("dap-vscode-js")
--- local dap = require("dap")
--- require("nvim-dap-virtual-text").setup()
--- require("dapui").setup()
-
--- dapVscode.setup({
---     adapters = {
---         'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal',
---         'pwa-extensionHost'
---     },
---     debugger_path = "/home/ivelinov/.config/nvim/plugged/vscode-js-debug/"
--- })
-
-
--- dap.adapters.node2 = {
--- 	type = "executable",
--- 	command = "node",
--- 	args = { "/home/ivelinov/apps/vscode-node-debug2/out/src/nodeDebug.js" },
--- }
-
--- require("wankishh.debug")
 
 -- Nerdtree
 map("<C-n>", function()

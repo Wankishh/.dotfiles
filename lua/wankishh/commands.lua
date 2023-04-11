@@ -20,10 +20,17 @@ autocmd({"BufWritePre"}, {
 })
 
 local mceFolder = "~/projects/developsoft/mce"
+local automotoFolder = "~/projects/typescript/automoto"
 
 autocmd({"BufWritePre"}, {
     group = WankishhGroup,
     pattern = { mceFolder .. "/*.ts", mceFolder .. "/*.tsx"},
+    command = ":EslintFixAll",
+})
+
+autocmd({"BufWritePre"}, {
+    group = WankishhGroup,
+    pattern = { "*.ts"},
     command = ":EslintFixAll",
 })
 
