@@ -8,7 +8,6 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.hlsearch = false
 
-
 -- tabs
 
 vim.opt.expandtab = false -- false - tab, true - spaces
@@ -48,16 +47,13 @@ vim.opt.updatetime = 50
 vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = "80"
 
-
 vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.diffopt:append("vertical")
 
 vim.cmd "colorscheme gruvbox"
-vim.cmd "hi Normal guibg=NONE ctermbg=NONE";
 vim.cmd "syntax on"
 
 vim.diagnostic.config({ virtual_text = true })
 vim.diagnostic.open_float();
-
 
