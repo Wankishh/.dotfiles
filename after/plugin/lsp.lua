@@ -24,9 +24,7 @@ lsp.configure('lua-language-server', {
     }
 })
 
-print(javaConfig)
 lsp.configure('jdtls', javaConfig)
-
 
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
@@ -36,9 +34,6 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<C-y>'] = cmp.mapping.confirm({ select = true }),
   ["<C-Space>"] = cmp.mapping.complete(),
 })
-
-cmp_mappings['<Tab>'] = nil
-cmp_mappings['<S-Tab>'] = nil
 
 lsp.setup_nvim_cmp({
   mapping = cmp_mappings
@@ -56,7 +51,7 @@ lsp.set_preferences({
 
 local on_attach = lsp.on_attach(function(client, bufnr)
     nnoremap("gd", function() vim.lsp.buf.definition() end)
-    nnoremap("gr", function() vim.lsp.buf.references() end)
+    nnoremap("gr", function() require("telescope.builtin").lsp_references() end)
     nnoremap("gi", function() vim.lsp.buf.implementation() end)
     nnoremap("ca", function() vim.lsp.buf.code_action() end)
     nnoremap("rn", function() vim.lsp.buf.rename() end)

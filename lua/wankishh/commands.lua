@@ -2,7 +2,6 @@
 local augroup = vim.api.nvim_create_augroup
 WankishhGroup = augroup('wankishh', {})
 
-
 local autocmd = vim.api.nvim_create_autocmd
 local user_command = vim.api.nvim_create_user_command
 
@@ -26,6 +25,12 @@ autocmd({"BufWritePre"}, {
     group = WankishhGroup,
     pattern = { mceFolder .. "/*.ts", mceFolder .. "/*.tsx"},
     command = ":EslintFixAll",
+})
+
+autocmd({"BufLeave"}, {
+    group = WankishhGroup,
+    pattern = { "*.ts"},
+    command = ":wa"
 })
 
 autocmd({"BufWritePre"}, {

@@ -1,43 +1,55 @@
 -- Java.lua
 local jdtls = require("jdtls")
 
+local home_dir = "/home/ivelinov"
 local  WORKSPACE_PATH = vim.fn.expand("$HOME") .. "/projects/java"
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = WORKSPACE_PATH .. "/" ..project_name
-print(vim.fn.getcwd())
-print("workspace_dir: " .. workspace_dir)
-print("project_name: " .. project_name)
 
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
+
+local is_file_exist = function(path)
+  local f = io.open(path, 'r')
+  return f ~= nil and io.close(f)
+end
+
+local get_lombok_javaagent = function()
+  local lombok_dir = home_dir..'/.m2/repository/org/projectlombok/lombok/'
+  local lombok_versions = io.popen('ls -1 "' .. lombok_dir .. '" | sort -r')
+  if lombok_versions ~= nil then
+    local lb_i, lb_versions = 0, {}
+    for lb_version in lombok_versions:lines() do
+      lb_i = lb_i + 1
+      lb_versions[lb_i] = lb_version
+    end
+    lombok_versions:close()
+    if next(lb_versions) ~= nil then
+      local lombok_jar = vim.fn.expand(string.format('%s%s/*.jar', lombok_dir, lb_versions[1]))
+      if is_file_exist(lombok_jar) then
+        return string.format('--jvm-arg=-javaagent:%s', lombok_jar)
+      end
+    end
+  end
+  return ''
+end
+
+local getCmd = function()
+    local cmd = {
+	"jdtls",
+	get_lombok_javaagent(),
+	-- "-data",
+	-- workspace_dir,
+    }
+
+    return cmd
+end
+
 local config = {
-    cmd = {
-	--
-	"java", -- Or the absolute path '/path/to/java11_or_newer/bin/java'
-	"-Declipse.application=org.eclipse.jdt.ls.core.id1",
-	"-Dosgi.bundles.defaultStartLevel=4",
-	"-Declipse.product=org.eclipse.jdt.ls.core.product",
-	"-Dlog.protocol=true",
-	"-Dlog.level=ALL",
-	"-Xms1g",
-	"--add-modules=ALL-SYSTEM",
-	"--add-opens",
-	"java.base/java.util=ALL-UNNAMED",
-	"--add-opens",
-	"java.base/java.lang=ALL-UNNAMED",
-	"-jar",
-	"/home/ivelinov/plugin/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar",
-	"-configuration", "/home/ivelinov/plugin/config_linux",
-	"-data", workspace_dir
-    },
+    cmd = getCmd(),
     settings = {
 	java = {
-	    -- jdt = {
-	    --   ls = {
-	    --     vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m"
-	    --   }
-	    -- },
 	    eclipse = {
 		downloadSources = true,
 	    },
