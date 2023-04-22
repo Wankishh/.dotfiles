@@ -17,7 +17,9 @@ nnoremap("<Leader>ff", function()
 end)
 
 nnoremap("<Leader>fb", function()
-    require('telescope.builtin').buffers()
+    require('telescope.builtin').buffers({
+		sort_mru = true
+	})
 end)
 
 nnoremap("<Leader>fg", function()

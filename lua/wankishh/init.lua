@@ -3,75 +3,13 @@ local map = remap.nmap
 local nnoremap = remap.nnoremap
 local inoremap = remap.inoremap
 local vnoremap = remap.vnoremap
-local Plug = vim.fn['plug#']
 
-vim.call('plug#begin', '~/.config/nvim/plugged')
-    Plug 'mfussenegger/nvim-jdtls'
-    Plug 'williamboman/mason.nvim'
-    Plug 'williamboman/mason-lspconfig.nvim'
-    Plug 'neovim/nvim-lspconfig'
 
-    Plug 'theHamsta/nvim-dap-virtual-text'
-    Plug 'ThePrimeagen/refactoring.nvim'
-    Plug 'David-Kunz/jester'
-    Plug 'mxsdev/nvim-dap-vscode-js'
-    Plug 'nvim-telescope/telescope-dap.nvim'
-    Plug 'nvim-telescope/telescope-ui-select.nvim'
-
-    Plug 'lewis6991/gitsigns.nvim'
-
-    Plug ("ThePrimeagen/harpoon")
-    Plug ("nvim-treesitter/nvim-treesitter", { ['do']= ":TSUpdate"})
-
-    -- Autocomplete
-    Plug 'hrsh7th/nvim-cmp'
-    Plug 'hrsh7th/cmp-buffer'
-    Plug 'hrsh7th/cmp-path'
-    Plug 'hrsh7th/cmp-nvim-lua'
-    Plug 'hrsh7th/cmp-nvim-lsp'
-    Plug 'onsails/diaglist.nvim'
-    Plug 'onsails/lspkind.nvim'
-    Plug 'saadparwaiz1/cmp_luasnip'
-
-    --  Snippets
-    Plug 'L3MON4D3/LuaSnip'
-    Plug 'rafamadriz/friendly-snippets'
-
-    Plug 'tpope/vim-commentary'
-    Plug 'thaerkh/vim-workspace'
-    Plug 'xuyuanp/nerdtree-git-plugin'
-    Plug 'nvim-telescope/telescope-fzy-native.nvim'
-    Plug 'kdheepak/lazygit.nvim'
-    Plug 'doums/darcula'
-    Plug 'windwp/nvim-autopairs'
-    Plug 'vim-airline/vim-airline'
-    Plug 'preservim/nerdtree'
-    Plug 'windwp/nvim-autopairs'
-    Plug 'pantharshit00/vim-prisma'
-    Plug 'nvim-lua/popup.nvim'
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
-    Plug 'pangloss/vim-javascript'    --  JavaScript support
-    Plug 'leafgarland/typescript-vim' --  TypeScript syntax
-    Plug 'maxmellon/vim-jsx-pretty'   -- JS and JSX syntax
-    Plug 'jparise/vim-graphql'        -- GraphQL syntax
-    Plug 'eslint/eslint'
-    Plug 'morhetz/gruvbox'
-    Plug 'kyazdani42/nvim-web-devicons' -- Recommended (for coloured icons)
-    Plug ('akinsho/bufferline.nvim', {['tag']= 'v2.*' })
-
-    Plug 'mfussenegger/nvim-dap'
-    Plug 'rcarriga/nvim-dap-ui'
-    Plug 'VonHeikemen/lsp-zero.nvim'
-    Plug "github/copilot.vim"
-    --" Use release branch (recommend)
-vim.call('plug#end')
-
+require("wankishh.packer")
 require("mason").setup()
 require("nvim-autopairs").setup {}
 
 require("wankishh.telescope")
--- require("wankishh.lsp")
 require("wankishh.harpoon")
 require("wankishh.refactoring")
 require("wankishh.gitCommands")
