@@ -3,6 +3,7 @@ local map = remap.nmap
 local nnoremap = remap.nnoremap
 local inoremap = remap.inoremap
 local vnoremap = remap.vnoremap
+local which = require("wankishh.helpers.whichKey")
 
 
 require("wankishh.packer")
@@ -19,24 +20,13 @@ map("<C-n>", function()
     vim.cmd(":NERDTreeToggle %")
 end)
 
+which.registerNormal({
+	n = { name = "Files", "Toggle NerdTree" }
+}, "Control")
+
 
 -- This is going to get me cancelled
 inoremap("<C-c>", "<Esc>")
-
-nnoremap("<Leader>qa", function ()
-    vim.cmd("%bd! | e# | bd#")
-end)
-
-nnoremap("<Leader>s", function ()
-    vim.cmd(":w")
-end)
-
--- How to exit vim??!?
-nnoremap("<C-q>", function ()
-    local num = vim.nvim_get_current_buf()
-    vim.cmd(":%bd " .. num)
-end)
-
 
 -- Yank to clipboard
 nnoremap("<Leader>y", "\"+y")
