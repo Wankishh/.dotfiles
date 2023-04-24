@@ -4,9 +4,25 @@ local nnoremap = remap.nnoremap
 
 local telescope = require("telescope")
 local which = require('wankishh.helpers.whichKey')
+local actions = require("telescope.actions")
 
-telescope.setup{}
-telescope.load_extension("fzy_native")
+telescope.setup{
+	extensions = {
+		fzf = {
+			fuzzy = true,                    -- false will only do exact matching
+			override_generic_sorter = true,  -- override the generic sorter
+			override_file_sorter = true,
+		},
+	},
+	defaults = {
+		mappings = {
+			i = {
+				["<esc>"] = actions.close
+			},
+		},
+	}
+}
+telescope.load_extension("fzf")
 telescope.load_extension("lazygit")
 
 nnoremap("<Leader>fs", function()

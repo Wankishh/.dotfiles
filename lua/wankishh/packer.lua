@@ -19,11 +19,11 @@ return require('packer').startup(function(use)
     use 'neovim/nvim-lspconfig'
 
 	use 'theHamsta/nvim-dap-virtual-text'
+	use({"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"})
 	use {
 		"ThePrimeagen/refactoring.nvim",
 		requires = {
 			{"nvim-lua/plenary.nvim"},
-			{"nvim-treesitter/nvim-treesitter"}
 		}
 	}
 	use 'David-Kunz/jester'
@@ -34,7 +34,6 @@ return require('packer').startup(function(use)
     use 'lewis6991/gitsigns.nvim'
 
     use ("ThePrimeagen/harpoon")
-    use ("nvim-treesitter/nvim-treesitter", { ['do']= ":TSUpdate"})
 
     -- Autocomplete
     use 'hrsh7th/nvim-cmp'
@@ -90,6 +89,7 @@ return require('packer').startup(function(use)
 			}
 		end
 	}
+	use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

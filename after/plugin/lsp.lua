@@ -10,18 +10,17 @@ lsp.ensure_installed({
   'tsserver',
   'rust_analyzer',
   'eslint',
-  'jdtls'
+  'jdtls',
+  'lua_ls'
 })
 
 -- Fix Undefined global 'vim'
-lsp.configure('lua-language-server', {
+lsp.configure('lua_ls', {
     settings = {
-        Lua = {
-            diagnostics = {
-                globals = { 'vim' }
-            }
-        }
-    }
+		diagnostics = {
+			globals = { 'vim' }
+		}
+	}
 })
 
 lsp.configure('jdtls', javaConfig)
