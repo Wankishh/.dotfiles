@@ -259,6 +259,11 @@ _G.packer_plugins = {
     path = "/home/ivelinov/.local/share/nvim/site/pack/packer/start/refactoring.nvim",
     url = "https://github.com/ThePrimeagen/refactoring.nvim"
   },
+  ["sonarlint.nvim"] = {
+    loaded = true,
+    path = "/home/ivelinov/.local/share/nvim/site/pack/packer/start/sonarlint.nvim",
+    url = "https://github.com/schrieveslaach/sonarlint.nvim"
+  },
   ["telescope-dap.nvim"] = {
     loaded = true,
     path = "/home/ivelinov/.local/share/nvim/site/pack/packer/start/telescope-dap.nvim",

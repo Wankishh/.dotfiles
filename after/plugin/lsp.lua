@@ -2,7 +2,8 @@ local lsp = require("lsp-zero")
 local remap = require("wankishh.keymap")
 local nnoremap = remap.nnoremap
 local inoremap = remap.inoremap
-local javaConfig = require("wankishh.Java")
+local javaConfig = require("wankishh.languages.Java")
+local root_pattern = require("lspconfig.util").root_pattern
 
 lsp.preset("recommended")
 
@@ -23,7 +24,13 @@ lsp.configure('lua_ls', {
 	}
 })
 
-lsp.configure('jdtls', javaConfig)
+lsp.configure("eslint", {
+	root_dir = root_pattern(
+	    ".eslintrc.js"
+	),
+})
+
+lsp.configure('jdtls', javaConfig.createLspConfig())
 
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
@@ -33,6 +40,9 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<C-y>'] = cmp.mapping.confirm({ select = true }),
   ["<C-Space>"] = cmp.mapping.complete(),
 })
+
+cmp_mappings['<Tab>'] = nil
+cmp_mappings['<S-Tab>'] = nil
 
 lsp.setup_nvim_cmp({
   mapping = cmp_mappings

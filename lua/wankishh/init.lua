@@ -9,11 +9,12 @@ local which = require("wankishh.helpers.whichKey")
 require("wankishh.packer")
 require("mason").setup()
 require("nvim-autopairs").setup {}
-
 require("wankishh.telescope")
 require("wankishh.harpoon")
 require("wankishh.refactoring")
 require("wankishh.gitCommands")
+-- require("wankishh.lsp")
+-- require("wankishh.cmp")
 
 -- Nerdtree
 map("<C-n>", function()
