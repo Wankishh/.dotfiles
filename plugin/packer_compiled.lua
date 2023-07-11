@@ -179,15 +179,10 @@ _G.packer_plugins = {
     path = "/home/ivelinov/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
   },
-  nerdtree = {
+  ["null-ls.nvim"] = {
     loaded = true,
-    path = "/home/ivelinov/.local/share/nvim/site/pack/packer/start/nerdtree",
-    url = "https://github.com/preservim/nerdtree"
-  },
-  ["nerdtree-git-plugin"] = {
-    loaded = true,
-    path = "/home/ivelinov/.local/share/nvim/site/pack/packer/start/nerdtree-git-plugin",
-    url = "https://github.com/xuyuanp/nerdtree-git-plugin"
+    path = "/home/ivelinov/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
+    url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
   },
   ["nvim-autopairs"] = {
     loaded = true,
@@ -229,6 +224,11 @@ _G.packer_plugins = {
     path = "/home/ivelinov/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/home/ivelinov/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
+    url = "https://github.com/nvim-tree/nvim-tree.lua"
+  },
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/home/ivelinov/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
@@ -258,11 +258,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ivelinov/.local/share/nvim/site/pack/packer/start/refactoring.nvim",
     url = "https://github.com/ThePrimeagen/refactoring.nvim"
-  },
-  ["sonarlint.nvim"] = {
-    loaded = true,
-    path = "/home/ivelinov/.local/share/nvim/site/pack/packer/start/sonarlint.nvim",
-    url = "https://github.com/schrieveslaach/sonarlint.nvim"
   },
   ["telescope-dap.nvim"] = {
     loaded = true,

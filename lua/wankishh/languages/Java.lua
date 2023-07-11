@@ -4,6 +4,7 @@ local home_dir = "/home/ivelinov"
 local  WORKSPACE_PATH = vim.fn.expand("$HOME") .. "/projects/java"
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = WORKSPACE_PATH .. "/" ..project_name
+local data_workspace = WORKSPACE_PATH .. "/workspaces/" .. project_name
 
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
@@ -41,8 +42,8 @@ java.getCmd = function()
 	local cmd = {
 		"jdtls",
 		get_lombok_javaagent(),
-		-- "-data",
-		-- workspace_dir,
+		"-data",
+		data_workspace,
 	}
 
     return cmd

@@ -1,5 +1,9 @@
 vim.g.mapleader = " "
-vim.g.NERDTreeMinimalMenu=1
+--
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 require("wankishh")
 -- vim.opt.guicursor = ""
 
@@ -22,8 +26,6 @@ vim.opt.relativenumber = true
 vim.opt.nu = true
 vim.opt.wrap = false
 
--- folds
-vim.opt.foldmethod = "syntax"
 
 
 vim.opt.ignorecase = true
@@ -56,4 +58,10 @@ vim.cmd "syntax on"
 
 vim.diagnostic.config({ virtual_text = true })
 vim.diagnostic.open_float();
+
+-- folds
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevel = 99
+vim.opt.foldenable = true
 

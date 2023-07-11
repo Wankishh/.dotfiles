@@ -49,32 +49,38 @@ return require('packer').startup(function(use)
     use 'L3MON4D3/LuaSnip'
     use 'rafamadriz/friendly-snippets'
 
-    use 'tpope/vim-commentary'
-    use 'thaerkh/vim-workspace'
-    use 'xuyuanp/nerdtree-git-plugin'
-    use 'nvim-telescope/telescope-fzy-native.nvim'
-    use 'kdheepak/lazygit.nvim'
-    use 'doums/darcula'
-    use 'windwp/nvim-autopairs'
-    use 'vim-airline/vim-airline'
-    use 'preservim/nerdtree'
-    use 'pantharshit00/vim-prisma'
-    use 'nvim-lua/popup.nvim'
-    use 'nvim-lua/plenary.nvim'
-    use 'nvim-telescope/telescope.nvim'
-    use 'pangloss/vim-javascript'    --  JavaScript support
-    use 'leafgarland/typescript-vim' --  TypeScript syntax
-    use 'maxmellon/vim-jsx-pretty'   -- JS and JSX syntax
-    use 'jparise/vim-graphql'        -- GraphQL syntax
-    use 'eslint/eslint'
-    use 'morhetz/gruvbox'
-    use 'kyazdani42/nvim-web-devicons' -- Recommended (for coloured icons)
-    use ('akinsho/bufferline.nvim', {['tag']= 'v2.*' })
+	use 'tpope/vim-commentary'
+	use 'thaerkh/vim-workspace'
+	use 'nvim-telescope/telescope-fzy-native.nvim'
+	use 'kdheepak/lazygit.nvim'
+	use 'doums/darcula'
+	use 'windwp/nvim-autopairs'
+	use 'vim-airline/vim-airline'
+	use {
+		'nvim-tree/nvim-tree.lua',
+		requires = {
+			'nvim-tree/nvim-web-devicons', -- optional
+		},
+	}
+	use 'pantharshit00/vim-prisma'
+	use 'nvim-lua/popup.nvim'
+	use 'nvim-lua/plenary.nvim'
+	use 'nvim-telescope/telescope.nvim'
+	use 'pangloss/vim-javascript'    --  JavaScript support
+	use 'leafgarland/typescript-vim' --  TypeScript syntax
+	use 'maxmellon/vim-jsx-pretty'   -- JS and JSX syntax
+	use 'jparise/vim-graphql'        -- GraphQL syntax
+	use 'eslint/eslint'
+	use 'morhetz/gruvbox'
+	use 'kyazdani42/nvim-web-devicons' -- Recommended (for coloured icons)
+	use ('akinsho/bufferline.nvim', {['tag']= 'v2.*' })
 
     use 'mfussenegger/nvim-dap'
     use 'rcarriga/nvim-dap-ui'
     use 'VonHeikemen/lsp-zero.nvim'
     use "github/copilot.vim"
+    use "jose-elias-alvarez/null-ls.nvim"
+    use "folke/neodev.nvim"
 
 
 	use {
@@ -90,6 +96,55 @@ return require('packer').startup(function(use)
 		end
 	}
 	use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+
+	use {
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("trouble").setup {
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			}
+		end
+	}
+
+	use {
+		"folke/todo-comments.nvim",
+		requires = "nvim-lua/plenary.nvim",
+		config = function()
+			require("todo-comments").setup {
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			}
+		end
+	}
+
+	use {
+		"folke/zen-mode.nvim",
+		config = function()
+			require("zen-mode").setup {
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			}
+		end
+	}
+
+	use {
+		"folke/tokyonight.nvim",
+	}
+
+	use {
+		"tpope/vim-surround"
+	}
+
+	use {
+		'phaazon/hop.nvim',
+		branch = 'v2', -- optional but strongly recommended
+	}
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if packer_bootstrap then
