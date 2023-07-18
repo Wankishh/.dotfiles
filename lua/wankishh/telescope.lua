@@ -20,6 +20,10 @@ telescope.setup{
 				["<esc>"] = actions.close
 			},
 		},
+		layout_config = {
+			prompt_position = "top",
+		},
+		layout_strategy = "vertical",
 	}
 }
 telescope.load_extension("fzf")

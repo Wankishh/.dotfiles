@@ -32,6 +32,10 @@ userCommand("W", function()
 	vim.cmd(":w")
 end, {})
 
+userCommand("Q", function()
+	vim.cmd(":q")
+end, {})
+
 userCommand("Format", function()
 	vim.lsp.buf.format({ async = false })
 end, {})

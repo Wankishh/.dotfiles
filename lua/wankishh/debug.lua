@@ -2,13 +2,14 @@ local dap = require("dap")
 local dapui = require("dapui")
 local debugHelper = require("wankishh.debugHelper")
 local which = require("wankishh.helpers.whichKey")
+require("nvim-dap-virtual-text").setup({ enabled = true })
 
 dapui.setup()
 
 local remap = require("wankishh.keymap")
 local map = remap.nmap
 
-dap.adapters.node2 = {
+dap.adapters.node = {
   type = 'executable',
   command = 'node',
   args = { os.getenv('HOME') .. '/apps/vscode-node-debug2/out/src/nodeDebug.js' },
@@ -42,7 +43,7 @@ map('<leader>dR', function() dap.clear_breakpoints() end)
 map('<leader>de', function() dap.set_exception_breakpoints({"all"}) end)
 
 map('<leader>da', function() debugHelper.attach() end)
-map('<leader>dA', function() debugHelper.attachToRemote() end)
+map('<leader>dA', function() debugHelper.debugFlashFlow() end)
 
 map('<leader>di', function() require"dap.ui.widgets".hover() end)
 
@@ -62,7 +63,6 @@ require('telescope').load_extension('dap')
 map('<leader>ds', ':Telescope dap frames<CR>')
 -- map('<leader>dc', ':Telescope dap commands<CR>')
 map('<leader>dB', ':Telescope dap list_breakpoints<CR>')
-
 
 which.registerNormal({
 	d = {
