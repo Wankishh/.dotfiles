@@ -50,16 +50,23 @@ return require("packer").startup(function(use)
 	use("rafamadriz/friendly-snippets")
 
 	use("tpope/vim-commentary")
-	use("thaerkh/vim-workspace")
 	use("nvim-telescope/telescope-fzy-native.nvim")
 	use("kdheepak/lazygit.nvim")
 	use("doums/darcula")
 	use("windwp/nvim-autopairs")
-	use("vim-airline/vim-airline")
+	-- use({
+	-- 	"nvim-tree/nvim-tree.lua",
+	-- 	requires = {
+	-- 		"nvim-tree/nvim-web-devicons", -- optional
+	-- 	},
+	-- })
 	use({
-		"nvim-tree/nvim-tree.lua",
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
 		requires = {
-			"nvim-tree/nvim-web-devicons", -- optional
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
 		},
 	})
 	use("pantharshit00/vim-prisma")
@@ -69,7 +76,7 @@ return require("packer").startup(function(use)
 	use("pangloss/vim-javascript") --  JavaScript support
 	use("leafgarland/typescript-vim") --  TypeScript syntax
 	use("maxmellon/vim-jsx-pretty") -- JS and JSX syntax
-	use("jparise/vim-graphql")     -- GraphQL syntax
+	use("jparise/vim-graphql") -- GraphQL syntax
 	use("eslint/eslint")
 	use("morhetz/gruvbox")
 	use("kyazdani42/nvim-web-devicons") -- Recommended (for coloured icons)
@@ -147,6 +154,61 @@ return require("packer").startup(function(use)
 	use({
 		"kylechui/nvim-surround",
 		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+	})
+
+	use({ "stevearc/dressing.nvim" })
+	use({ "MunifTanjim/nui.nvim" })
+	use("rcarriga/nvim-notify")
+
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "nvim-tree/nvim-web-devicons", opt = true },
+	})
+
+	use({
+		"nvimdev/lspsaga.nvim",
+	})
+
+	use({
+		"tpope/vim-fugitive",
+	})
+
+	use({
+		"Joakker/lua-json5",
+		run = "./install.sh",
+	})
+	use({
+		"christoomey/vim-tmux-navigator",
+	})
+	use({
+		"nvim-neotest/neotest",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"antoinemadec/FixCursorHold.nvim",
+			"haydenmeade/neotest-jest",
+		},
+	})
+
+	use({
+		"klen/nvim-test",
+		config = function()
+			require("nvim-test").setup()
+		end,
+	})
+
+
+	use({
+		"nvim-telescope/telescope-symbols.nvim",
+	})
+
+
+	use({
+		"folke/noice.nvim",
+		requires = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		}
 	})
 
 	-- Automatically set up your configuration after cloning packer.nvim

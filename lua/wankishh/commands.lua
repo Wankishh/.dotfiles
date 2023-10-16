@@ -3,18 +3,9 @@ WankishhGroup = augroup("wankishh", {})
 
 local autocmd = vim.api.nvim_create_autocmd
 local userCommand = vim.api.nvim_create_user_command
-
--- autocmd({ "BufWinEnter" }, {
--- 	group = WankishhGroup,
--- 	pattern = "*",
--- 	command = "normal zR",
--- })
-
--- autocmd({ "BufWritePre" }, {
--- 	group = WankishhGroup,
--- 	pattern = "*",
--- 	command = "%s/\\s\\+$//e",
--- })
+local projectUtils = require("wankishh.project")
+local nmap = require("wankishh.keymap").nmap
+local which = require("wankishh.helpers.whichKey")
 
 autocmd({ "BufLeave" }, {
 	group = WankishhGroup,
@@ -22,11 +13,6 @@ autocmd({ "BufLeave" }, {
 	command = ":wa",
 })
 
--- autocmd({ "BufWritePre" }, {
--- 	group = WankishhGroup,
--- 	pattern = { "*.ts" },
--- 	command = ":EslintFixAll",
--- })
 
 userCommand("W", function()
 	vim.cmd(":w")
@@ -36,22 +22,53 @@ userCommand("Q", function()
 	vim.cmd(":q")
 end, {})
 
+local function triggerEslintFix()
+	vim.cmd(":EslintFixAll")
+end
+
 userCommand("Format", function()
-	vim.lsp.buf.format({ async = false })
+	if projectUtils.isMceProject() then
+		triggerEslintFix()
+	else
+		vim.lsp.buf.format({ async = false })
+	end
 end, {})
+
+nmap("\\f", ":Format<CR>")
+
+-- Fix gitsigns bug
+nmap("\\g", ":Gitsigns attach<CR>")
 
 
 userCommand("ReloadEnvironment", function()
 	vim.cmd(":so ~/.config/nvim/init.lua")
 end, {})
 
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+nmap("\\r", ":ReloadEnvironment<CR>")
+
 
 userCommand("Lint", function()
-	if project_name == "mce" then
-		vim.cmd(":EsLintFixAll")
-		return
+	if projectUtils.isMceProject() then
+		triggerEslintFix()
 	else
 		vim.cmd("!npm run lint")
 	end
 end, {})
+
+nmap("\\l", ":Lint<CR>")
+
+
+userCommand("FixFold", function()
+	vim.cmd(":set foldmethod=syntax")
+end, {})
+
+nmap("\\z", ":FixFold<CR>")
+
+which.registerNormal({
+	["\\"] = {
+		name = "UserCommands",
+		f = "Format file",
+		l = "Lint file",
+		z = "Fix fold",
+	},
+})

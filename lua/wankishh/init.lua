@@ -4,7 +4,6 @@ local nnoremap = remap.nnoremap
 local inoremap = remap.inoremap
 local vnoremap = remap.vnoremap
 local which = require("wankishh.helpers.whichKey")
-local null_ls = require("null-ls")
 
 require("wankishh.packer")
 require("mason").setup()
@@ -12,39 +11,35 @@ require("nvim-autopairs").setup({})
 require("wankishh.telescope")
 require("wankishh.harpoon")
 require("wankishh.refactoring")
-require("wankishh.gitCommands")
 require("wankishh.debug")
-require("nvim-tree").setup {}
-null_ls.setup({
-	sources = {
-		null_ls.builtins.formatting.prettierd,
-		null_ls.builtins.formatting.stylua,
-		-- null_ls.builtins.diagnostics.eslint,
-		null_ls.builtins.completion.spell,
-		null_ls.builtins.formatting.prismaFmt,
+require("neo-tree").setup({
+	disable_netrw = true,
+	hijack_netrw = true,
+	open_on_setup = false,
+	ignore = { ".git", "node_modules", ".cache" },
+	auto_close = true,
+	update_cwd = true,
+	update_focused_file = {
+		enable = true,
+		update_cwd = true,
+		ignore_list = {},
 	},
-	-- on_attach = function(client, bufnr)
-		-- 	if client.supports_method("textDocument/formatting") then
-		-- 		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-		-- 		vim.api.nvim_create_autocmd("BufWritePre", {
-			-- 			group = augroup,
-			-- 			buffer = bufnr,
-			-- 			callback = function()
-				-- 				-- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-				-- 				-- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
-				-- 				vim.lsp.buf.format({ async = false })
-				-- 			end,
-				-- 		})
-				-- 	end
-				-- end,
-			})
+	git_hl = true,
+})
+
+require("lualine").setup({
+	options = {
+		theme = "gruvbox",
+	},
+})
+require("wankishh.gitCommands")
 
 map("<leader>e", function()
-	vim.cmd(":NvimTreeFindFileToggle")
+	vim.cmd(":Neotree toggle reveal")
 end)
 
 which.registerNormal({
-	e = { name = "Files", "Toggle Nvim Tree" },
+	e = { name = "Files", "Toggle Neo Tree" },
 }, "Leader")
 
 -- This is going to get me cancelled
@@ -59,6 +54,23 @@ map("<Leader>Y", '"+Y')
 nnoremap("<Leader>p", '"+p')
 vnoremap("<Leader>p", '"+p')
 map("<Leader>P", '"+P')
+
+map("C-h", function()
+	vim.cmd(":TmuxNavigateLeft")
+end)
+map("C-j", function()
+	vim.cmd(":TmuxNavigateDown")
+end)
+map("C-k", function()
+	vim.cmd(":TmuxNavigateUp")
+end)
+map("C-l", function()
+	vim.cmd(":TmuxNavigateRight")
+end)
+
+map("C-q", function()
+	vim.cmd(":q<CR>")
+end)
 
 require("wankishh.commands")
 require("wankishh.bufferline")

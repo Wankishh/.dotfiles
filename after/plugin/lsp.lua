@@ -1,14 +1,18 @@
 local lsp = require("lsp-zero")
+
 local remap = require("wankishh.keymap")
 local nnoremap = remap.nnoremap
+local nmap = remap.nmap
 local inoremap = remap.inoremap
 local javaConfig = require("wankishh.languages.Java")
 local root_pattern = require("lspconfig.util").root_pattern
+local projectUtils = require("wankishh.project")
 
 
 require("neodev").setup({
   -- add any options here, or leave empty to use the default settings
 });
+
 lsp.preset("recommended")
 
 lsp.ensure_installed({
@@ -31,11 +35,42 @@ lsp.configure("lua_ls", {
 	},
 })
 
-lsp.configure("eslint", {
-	root_dir = root_pattern(".eslintrc.js"),
+lsp.configure("tsserver", {
+	commands = {
+		OrganizeImports = {
+			function()
+				local params = {
+					command = "_typescript.organizeImports",
+					arguments = { vim.api.nvim_buf_get_name(0) },
+					title = "OrganizeImports",
+				}
+				vim.lsp.buf.execute_command(params)
+			end,
+		},
+		Refactor = {
+			function()
+				local params = {
+					command = "_typescript.refactor",
+					arguments = {
+						vim.api.nvim_buf_get_name(0),
+						vim.lsp.util.make_range_params(),
+						vim.fn.expand("<cword>"),
+					},
+					title = "Refactor",
+				}
+				vim.lsp.buf.execute_command(params)
+			end,
+		},
+	},
 })
 
-lsp.configure("jdtls", javaConfig.createLspConfig())
+if projectUtils.isMceProject() then
+	lsp.configure("eslint", {
+		root_dir = root_pattern(".eslintrc.js", ".eslintrc.json"),
+	})
+end
+
+-- lsp.configure("jdtls", javaConfig.createLspConfig())
 
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -79,6 +114,10 @@ local on_attach = lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<cr>", opts)
 	vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<cr>", opts)
 
+	nnoremap("gs", function()
+		require("telescope.builtin").lsp_document_symbols()
+	end)
+
 	-- nnoremap("gd", function()
 	-- 	vim.lsp.buf.definition()
 	-- end)
@@ -116,6 +155,8 @@ end)
 lsp.on_attach(on_attach)
 
 lsp.setup()
+
+require('lspsaga').setup({})
 
 vim.diagnostic.config({
 	virtual_text = true,

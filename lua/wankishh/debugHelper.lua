@@ -12,6 +12,7 @@ local function debugJest(testName, filename)
 		skipFiles = { "<node_internals>/**/*.js" },
 		console = "integratedTerminal",
 		port = 9229,
+		name = "Jest",
 	})
 end
 
@@ -24,6 +25,7 @@ local function attach()
 		sourceMaps = true,
 		protocol = "inspector",
 		skipFiles = { "<node_internals>/**/*.js" },
+		name = "Attach",
 	})
 end
 
@@ -39,42 +41,11 @@ local function attachToRemote()
 		sourceMaps = true,
 		protocol = "inspector",
 		skipFiles = { "<node_internals>/**/*.js" },
-	})
-end
-
-local function debugFlashFlow()
-	print("starting node")
-	dap.run({
-		type = "node",
-		request = "launch",
-		name = "Run Flash",
-		cwd = vim.fn.getcwd(),
-		args = {
-			"${workspaceFolder}/__tests__/flow-runner/index.ts",
-			"--flow",
-			"flash",
-			"--mocks",
-			"mlp-flash.ts",
-			"displayLayer",
-			"false"
-		},
-		runtimeArgs = { "--nolazy", "-r", "ts-node/register" },
-		sourceMaps = true,
-		autoAttachChildProcesses = true,
-		protocol = "inspector",
-		skipFiles = { "<node_internals>/**" },
-		env = {
-			NODE_ENV = "development",
-			DEBUG = "mce*",
-			TS_NODE_TRANSPILE_ONLY = true,
-			MCEDEBUG = true,
-			MCESTANDALONE = true,
-		},
+		name = "Attach Remote",
 	})
 end
 
 local function debugNest()
-	print("Starting Nest")
 	dap.run({
 		type = "node",
 		request = "launch",
@@ -94,11 +65,27 @@ local function debugNest()
 	})
 end
 
+local function debugCreateListingInAutomoto()
+	print(vim.fn.getcwd())
+	dap.run({
+		type = "node",
+		request = "launch",
+		name = "Node Debug",
+		cwd = vim.fn.getcwd(),
+		args = {"${workspaceFolder}/createListingBuilder.js"},
+		restart = true,
+		protocol = "inspector",
+		sourceMaps = true,
+		port = 9229,
+		autoAttachChildProcesses = true,
+	})
+end
+
 
 return {
 	debugJest = debugJest,
 	attach = attach,
 	attachToRemote = attachToRemote,
-	debugFlashFlow = debugFlashFlow,
+	debugCreateListingInAutomoto = debugCreateListingInAutomoto,
 	debugNest = debugNest,
 }
